@@ -1,0 +1,102 @@
+{% extends 'hostel/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">RRR</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">RRR</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <h5 class="mb-2">Get Student</h5>
+        <div class="row">
+
+            <div class="col-12">
+                <div class="info-box">
+                    <div class="info-box-content">
+                        <form method="get">
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="studentreg">Student Reg</label>
+                                    <input type="text" class="form-control" name="student" id="studentreg"
+                                        placeholder="Enter reg number">
+                                        <button type="submit" class="btn btn-primary my-2">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="text-center">
+                            <p>STUDENT INFO</p>
+                        </div>
+                        {% if student == None %}
+                        <p>No record yet</p>
+                        {% else %}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Dept</th>
+                                    <th>Level</th>
+                                    <th>RRR</th>
+                                    <th>Phone</th>
+                                    <th>Created On</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{student.surname}} {{student.first_name}} {{student.other_name}}
+                                    </td>
+                                    <td>
+                                        {{student.department}}
+                                    </td>
+                                    <td>
+                                        {{student.level}}
+                                    </td>
+                                    <td class="text-success">
+                                        {% if student.rrr|length == 12 %}
+                                        {{student.rrr|slice:"4"}}-{{student.rrr|slice:"4:8"}}-{{student.rrr|slice:"8:12"}}
+                                        {% else %}
+                                        {{student.rrr}}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{student.phone}}
+                                    </td>
+                                    <td>
+                                        {{student.curtime}}
+                                    </td>
+                                    <td>
+                                        {{student.email}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+</section>
+<!-- /.content -->
+{% endblock content %}

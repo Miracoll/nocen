@@ -1,0 +1,128 @@
+{% extends 'hostel/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Administration</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Manage user</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <h5 class="mb-2">Manage user</h5>
+        <div class="row">
+
+            <div class="col-12">
+                <div class="info-box">
+                    <div class="info-box-content">
+
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Last Login</th>
+                                    <th>IP Address</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for u in users %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{u.last_name}} {{u.first_name}}</td>
+                                    <td>{{u.email}}</td>
+                                    <td>{{u.last_login}}</td>
+                                    <td>{{u.last_login_ip}}</td>
+                                    <td>{{u.role|upper}}</td>
+                                    <td><a href="" data-toggle="modal" data-target="#modal-default-{{u.id}}">View
+                                            log</a></td>
+                                    {% if u.role == 'user' %}
+                                    {% if u.is_active %}
+                                    <td><a href="{% url 'disable-user' u.email %}" class="text-danger">Disable</a></td>
+                                    {% else %}
+                                    <td><a href="{% url 'enable-user' u.email %}" class="text-success">Enable</a></td>
+                                    {% endif %}
+                                    {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                </tr>
+
+                                <div class="modal fade" id="modal-default-{{u.id}}">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="modal-title">View user log</div>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                {% for log in logs %}
+                                                {% if log.user.id == u.id %}
+                                                <div class="d-flex justify-content-between">
+                                                    <p>
+                                                        <span>
+                                                            {% if log.is_success %}
+                                                            &#9989;
+                                                            {% else %}
+                                                            &#10060;
+                                                            {% endif %}
+                                                        </span>
+                                                        {{log.action}}
+                                                    </p>
+                                                    <p>{{log.ip_address}}</p>
+                                                    <p>{{log.created}}</p>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Last Login</th>
+                                    <th>IP Address</th>
+                                    <th>Role</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+</section>
+<!-- /.content -->
+{% endblock content %}

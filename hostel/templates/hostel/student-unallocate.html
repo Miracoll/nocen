@@ -1,0 +1,119 @@
+{% extends 'hostel/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Student</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Unallocate Student</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <h5 class="mb-2">Get Student</h5>
+        <div class="row">
+
+            <div class="col-12">
+                <div class="info-box">
+                    <div class="info-box-content">
+
+                        <form method="get">
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="studentreg">Student Reg</label>
+                                    <input type="text" class="form-control" name="student" id="studentreg"
+                                        placeholder="Enter reg number">
+                                        <button type="submit" class="btn btn-primary my-2">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center">
+                            <p>STUDENT HOSTEL INFO</p>
+                        </div>
+                        
+                        {% if student == None %}
+                        <p>No record yet</p>
+                        {% else %}
+                        <div class="col-6 mx-auto">
+                            <div class="card">
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Name</p>
+                                    <p>{{student.student_name}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Registration Number</p>
+                                    <p>{{student.student_reg}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Hostel</p>
+                                    <p>{{student.hostel_name}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Room Number</p>
+                                    <p>{{student.room_number}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Bed Space</p>
+                                    <p>{{student.bed_label}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Gender</p>
+                                    <p>{{student.gender|upper}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between p-1">
+                                    <p>Allocation Date</p>
+                                    <p>{{student.alloc_date}}</p>
+                                </div>
+                                <button type="button" class="btn btn-danger w-80" data-toggle="modal" data-target="#modal-default">
+                                    Unallocate Student
+                                  </button>
+                                <div class="d-flex justify-content-between p-3">
+                                    <div class="modal fade" id="modal-default">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal-title">Confirmation</div>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Click unallocate to proceed with this action</p>
+                                                  </div>
+                                                  <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <a href="{% url 'student-unallocate' student.student_reg student.room_id student.bed_id %}" type="button" class="btn btn-danger">Unallocate</a>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+</section>
+<!-- /.content -->
+{% endblock content %}
